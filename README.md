@@ -4,7 +4,7 @@ This is a console application that merges pdfs preserving the bookmark structure
 ### Requirements
 - Visual Studio 2015+
 
-### Usuage
+### Usage
    ```sh
    mergepdfs "path to the parent folder of the folder containing the pdfs"
    ```

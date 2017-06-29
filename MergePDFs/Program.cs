@@ -126,10 +126,14 @@ namespace MergePDFs
         public static void MoveFolder(string folder, string path)
         {
             var FolderName = System.IO.Path.GetFileName(folder);
-            var Rest = FolderName.Substring(Math.Min(FolderName.Length - 1, FolderName.LastIndexOf(' ') + 1));
-            int test;
-            if (int.TryParse(Rest, out test))
-                FolderName = FolderName.Substring(0, FolderName.LastIndexOf(' '));
+            var FolderSpaceIndex = FolderName.LastIndexOf(' ');
+            if (FolderSpaceIndex != -1)
+            {
+                var Rest = FolderName.Substring(Math.Min(FolderName.Length, FolderSpaceIndex + 1));
+                int test;
+                if (int.TryParse(Rest, out test))
+                    FolderName = FolderName.Substring(0, FolderSpaceIndex);
+            }
 
             var FolderNumbers = System.IO.Directory.EnumerateDirectories(path)
                 .Select(x => System.IO.Path.GetFileName(x).ToLower())

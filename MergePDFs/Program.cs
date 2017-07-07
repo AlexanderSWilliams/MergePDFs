@@ -182,7 +182,7 @@ namespace MergePDFs
 
             File.WriteAllText(Folder + "\\merging.txt", "");
 
-            var PDFFiles = Directory.GetFiles(Folder, "*.pdf");
+            var PDFFiles = Directory.GetFiles(Folder, "*.pdf").OrderBy(x => Path.GetFileName(x));
             if (!PDFFiles.Any())
             {
                 Console.WriteLine("There are no pdf files in " + Folder);

@@ -79,18 +79,17 @@ namespace MergePDFs
                             if (IndividualBookmark != null)
                             {
                                 AddPageNumber(IndividualBookmark, SimpleNamedDestination.GetNamedDestination(reader, false), NumberOfPages);
+                            }
 
-                                Bookmark.Add(new Dictionary<string, object> {
+                            Bookmark.Add(new Dictionary<string, object> {
                                    {"Title", FileName.Substring(0, FileName.IndexOf('.'))},
                                    {"Open", "false"},
                                    {"Page", (NumberOfPages + 1) + " Fit"},
                                    {"Action", "GoTo"},
                                    {"Kids", IndividualBookmark}
                                 });
-                            }
 
                             NumberOfPages += reader.NumberOfPages;
-
                             pdf.AddDocument(reader);
                         }
                     }

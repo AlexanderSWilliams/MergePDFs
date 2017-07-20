@@ -125,7 +125,7 @@ namespace MergePDFs
             return merged;
         }
 
-        public static void MoveFolder(string folder, string path)
+        public static string MoveFolder(string folder, string path)
         {
             var FolderName = System.IO.Path.GetFileName(folder);
             var FolderSpaceIndex = FolderName.LastIndexOf(' ');
@@ -157,6 +157,7 @@ namespace MergePDFs
 
             Directory.Move(folder, path + "\\" + FolderName + Suffix);
             File.Delete(path + "\\" + FolderName + Suffix + "\\merging.txt");
+            return path + "\\" + FolderName + Suffix;
         }
 
         private static void Main(string[] args)
@@ -224,7 +225,10 @@ namespace MergePDFs
                 if (!Directory.Exists(ParentPath + "\\Errors"))
                     Directory.CreateDirectory(ParentPath + "\\Errors");
 
-                MoveFolder(Folder, ParentPath + "\\Errors");
+                if (!Directory.Exists(ParentPath + "\\Logs"))
+                    Directory.CreateDirectory(ParentPath + "\\Logs");
+
+                File.WriteAllText(ParentPath + "\\Logs\\" + Path.GetFileName(MoveFolder(Folder, ParentPath + "\\Errors")) + ".txt", e.ToString());
             }
         }
     }

@@ -176,7 +176,7 @@ namespace MergePDFs
                 return;
             }
             var FolderName = Path.GetFileName(Folder);
-            var ParentPath = Directory.GetParent(Folder).ToString();
+            var ParentPath = Directory.GetParent(Directory.GetParent(Folder).ToString()).ToString();
 
             if (!Directory.Exists(ParentPath + "\\Success"))
                 Directory.CreateDirectory(ParentPath + "\\Success");

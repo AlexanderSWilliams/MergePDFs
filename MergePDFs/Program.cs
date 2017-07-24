@@ -156,7 +156,6 @@ namespace MergePDFs
             var Suffix = FolderNumbers.Any() ? " " + NextNumber.ToString().PadLeft(3, '0') : "";
 
             Directory.Move(folder, path + "\\" + FolderName + Suffix);
-            File.Delete(path + "\\" + FolderName + Suffix + "\\merging.txt");
             return path + "\\" + FolderName + Suffix;
         }
 
@@ -164,23 +163,11 @@ namespace MergePDFs
         {
             if (args.Length != 1)
             {
-                Console.WriteLine(@"mergepdfs ""path to the parent folder of the folder containing the pdfs""");
+                Console.WriteLine(@"mergepdfs ""path folder containing the pdfs""");
                 return;
             }
 
-            var MergeFolderPath = args[0].TrimEnd(new[] { '\\' });
-
-            var Folder = Directory.GetDirectories(MergeFolderPath)
-                .Where(x => !Directory.GetFiles(x, "*.txt").Any(y => y.EndsWith("merging.txt")))
-                .OrderBy(x => Directory.GetLastWriteTime(x)).FirstOrDefault();
-
-            if (Folder == null)
-            {
-                Console.WriteLine("The merge folder has no new subfolders: " + MergeFolderPath);
-                return;
-            }
-
-            File.WriteAllText(Folder + "\\merging.txt", "");
+            var Folder = args[0].TrimEnd(new[] { '\\' });
 
             var PDFFiles = Directory.GetFiles(Folder, "*.pdf").OrderBy(x => Path.GetFileName(x));
             if (!PDFFiles.Any())
